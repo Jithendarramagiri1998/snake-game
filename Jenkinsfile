@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDS = credentials('docker')
-        SONAR = credentials('sonar-token')
+        SONAR = credentials('sonar')
         AWS_CREDS = credentials('aws-jenkins-creds')
         APP_IMAGE = "jithendarramagiri1998/snake-game:latest"
         CLUSTER_NAME = "my-eks-cluster"
