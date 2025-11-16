@@ -1,37 +1,43 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_CREDS = credentials('aws-jenkins-creds')
-    }
-
     stages {
 
-        stage('Checkout Repo') {
+        stage('Show Workspace Info') {
             steps {
-                git 'https://github.com/Jithendarramagiri1998/snake-game.git'
+                sh 'echo "======== WORKSPACE ========="'
+                sh 'pwd'
+                sh 'echo "======== ROOT FILES ======="'
+                sh 'ls -l'
             }
         }
 
-        stage('Terraform Init') {
+        stage('Checkout Repo') {
             steps {
-                dir('terraform-eks') {
-                    sh 'echo "Current dir:" && pwd'
-                    sh 'echo "List files:" && ls -l'
-                    sh 'terraform init'
-                }
+                git url: 'https://github.com/Jithendarramagiri1998/snake-game.git', branch: 'main'
+            }
+        }
+
+        stage('After Checkout - Verify Repo') {
+            steps {
+                sh 'echo "======== AFTER CHECKOUT ======="'
+                sh 'pwd'
+                sh 'ls -l'
+                sh 'echo "======== CHECK TERRAFORM DIR ======="'
+                sh 'ls -l terraform-eks || echo "terraform-eks NOT FOUND"'
             }
         }
 
         stage('Terraform Plan') {
             steps {
                 dir('terraform-eks') {
-                    sh 'echo "Current dir:" && pwd'
-                    sh 'echo "List files:" && ls -l'
+                    sh 'echo "======== TERRAFORM DIR ======="'
+                    sh 'pwd'
+                    sh 'ls -l'
+                    sh 'terraform version'
                     sh 'terraform plan'
                 }
             }
         }
-
     }
 }
