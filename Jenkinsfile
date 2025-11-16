@@ -41,7 +41,7 @@ pipeline {
          * ─────────────────────────────── */
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar-server') {
+                withSonarQubeEnv('MySonar') {
                     sh '''
                     sonar-scanner \
                       -Dsonar.projectKey=snake \
