@@ -1,0 +1,21 @@
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate*
+.crash
+*.log
+*.bak
+*.tfvars
+*.zip
+
+# Node modules
+node_modules/
+
+# Build folders
+dist/
+build/
+
+# OS Files
+.DS_Store
+
