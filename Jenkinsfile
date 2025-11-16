@@ -40,16 +40,18 @@ pipeline {
          *  SONARQUBE CODE ANALYSIS
          * ─────────────────────────────── */
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('MySonar') {
-                    sh '''
-                    sonar-scanner \
-                      -Dsonar.projectKey=snake \
-                      -Dsonar.sources=.
-                    '''
-                }
-            }
+    steps {
+        withSonarQubeEnv('MySonar') {
+            sh '''
+                ${SCANNER_HOME}/bin/sonar-scanner \
+                -Dsonar.projectKey=snake \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://<your-sonar-ip>:9000 \
+                -Dsonar.login=$SONAR
+            '''
         }
+    }
+}
 
         /* ───────────────────────────────
          *  TRIVY SECURITY SCAN
