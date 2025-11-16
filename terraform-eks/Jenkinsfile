@@ -3,23 +3,41 @@ pipeline {
 
     stages {
 
-        stage('Init') {
+        stage('Checkout SCM') {
             steps {
-                sh 'pwd'
-                sh 'ls -lah'
-                sh 'terraform init'
+                checkout scm
             }
         }
 
-        stage('Plan') {
+        stage('Terraform Init') {
             steps {
-                sh 'terraform plan'
+                dir('terraform-eks') {
+                    sh 'terraform init'
+                }
             }
         }
 
-        stage('Apply') {
+        stage('Terraform Validate') {
             steps {
-                sh 'terraform apply -auto-approve'
+                dir('terraform-eks') {
+                    sh 'terraform validate'
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                dir('terraform-eks') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir('terraform-eks') {
+                    sh 'terraform apply -auto-approve'
+                }
             }
         }
     }
