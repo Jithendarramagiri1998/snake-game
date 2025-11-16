@@ -39,16 +39,18 @@ pipeline {
         /* ───────────────────────────────
          *  SONARQUBE CODE ANALYSIS
          * ─────────────────────────────── */
-        stage('SonarQube Analysis') {
+       stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv('MySonar') {
-            sh '''
-                ${SCANNER_HOME}/bin/sonar-scanner \
-                -Dsonar.projectKey=snake \
-                -Dsonar.sources=. \
-                -Dsonar.host.url=http://44.220.152.225:9000 \
-                -Dsonar.login=$SONAR
-            '''
+            withSonarQubeEnv('MySonar') {
+                sh """
+                    ${SCANNER_HOME}/bin/sonar-scanner \
+                    -Dsonar.projectKey=snake \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://44.220.152.225:9000 \
+                    -Dsonar.login=$SONAR
+                """
+            }
         }
     }
 }
