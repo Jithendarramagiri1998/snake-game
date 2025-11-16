@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     environment {
-        AWS_CREDS = credentials('aws-eks-creds')
+        AWS_CREDS = credentials('aws-jenkins-creds')
     }
 
     stages {
         stage('Checkout') {
-            steps { git 'https://github.com/your-repo/terraform-eks.git' }
+            steps { git 'https://github.com/Jithendarramagiri1998/snake-game.git' }
         }
 
         stage('Terraform Init') {
